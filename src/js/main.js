@@ -17,8 +17,8 @@
 
 
   function setMainRichPicPath() {
-    // Sets the path of the main rich pic as defined in the config
-    $('.richpicture__frame__inner ').css('background-image', 'url(' + mainRichPicPath + ')');
+    //sets the path of the main rich pic as defined in the config
+    $(".richpicture__frame__inner").css("background-image", "url(" + mainRichPicPath + ")");
   }
 
   //resizes the frame to the width of the browser window
@@ -30,9 +30,9 @@
     //calculate the distance from the top of the window to vertically align
     rpFrameTop = ($(window).innerHeight()-rpFrameHeight)/2;
     //set the element to the sizes calculated
-    $('.richpicture__frame').width(rpFrameWidth).height(rpFrameHeight);
+    $(".richpicture__frame").width(rpFrameWidth).height(rpFrameHeight);
     //set the vertical alignment of the frame
-    $('.richpicture__frame').css("top", rpFrameTop);
+    $(".richpicture__frame").css("top", rpFrameTop);
 
   };
 
@@ -45,7 +45,9 @@
         break;
       //if the zoom state is 1 (zoomed in) then use the number of columns to work out the size of the image
       case 1:
+        //work out the width
         rpInnerWidth = rpFrameWidth*numCols;
+
         break;
       default:
         rpInnerWidth = rpFrameWidth;
@@ -53,7 +55,7 @@
     //set the rp frame height based on the ratio set in the config
     rpInnerHeight = rpInnerWidth*innerRatio;
     //set the element to the size calculated
-    $('.richpicture__frame__inner').width(rpInnerWidth).height(rpInnerHeight);
+    $(".richpicture__frame__inner").width(rpInnerWidth).height(rpInnerHeight);
   };
 
   function mainSetup() {

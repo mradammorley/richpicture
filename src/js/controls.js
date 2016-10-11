@@ -7,21 +7,21 @@
     //check for screen size when setting controls size
     if (rpFrameWidth>=desktopMin ) {
 
-      //Desktop
+      //desktop
       controlsSize = rpFrameWidth*controlsSizeDesktop;
       controlsOffsetLeft = rpFrameWidth*controlsOffsetLeftDesktop;
       controlsOffsetTop = $(window).innerHeight()*controlsOffsetTopDesktop;
 
     } else if (rpFrameWidth>=mobileMax) {
       
-      //Tablet
+      //tablet
       controlsSize = rpFrameWidth*controlsSizeTablet;
       controlsOffsetLeft = rpFrameWidth*controlsOffsetLeftTablet;
       controlsOffsetTop = $(window).innerHeight()*controlsOffsetTopTablet;
 
     } else {
       
-      //Mobile
+      //mobile
       controlsSize = rpFrameWidth*controlsSizeMobile;
       controlsOffsetLeft = rpFrameWidth*controlsOffsetLeftMobile;
       controlsOffsetTop = $(window).innerHeight()*controlsOffsetTopMobile;
@@ -30,11 +30,11 @@
     return [controlsSize, controlsOffsetLeft, controlsOffsetTop];
   }
 
-  //Position control buttons
+  //position control buttons
   function setControlsPosition() {
     //calclateControlsSizes() function returns three values in an array, size, left and top
     sizeAndPositionsArr = calculateControlsSize();
-    $('.controls').css({
+    $(".controls").css({
       width:sizeAndPositionsArr[0],
       height:sizeAndPositionsArr[0],
       left:sizeAndPositionsArr[1],
@@ -46,34 +46,34 @@
   function setControlsSvgButton() {
     //calclateControlsSizes() function returns three values in an array, size, left and top
     sizeAndPositionsArr = calculateControlsSize();
-    //The coordinates that were set in the config and add them to the html
-    $('.controls').find('svg').attr("viewBox", controlsSvgViewBox);
-    $('.controls').find('svg').css({
+    //the coordinates that were set in the config and add them to the html
+    $(".controls").find("svg").attr("viewBox", controlsSvgViewBox);
+    $(".controls").find("svg").css({
       width:sizeAndPositionsArr[0],
       height:sizeAndPositionsArr[0]
     });
-    //Set the coordinates for the button paths
-    $('.controls__up').attr("d", controlsSvgUp);
-    $('.controls__down').attr("d", controlsSvgDown);
-    $('.controls__left').attr("d", controlsSvgLeft);
-    $('.controls__right').attr("d", controlsSvgRight);
-    $('.controls__out').attr("d", controlsSvgOut);
+    //set the coordinates for the button paths
+    $(".controls__up").attr("d", controlsSvgUp);
+    $(".controls__down").attr("d", controlsSvgDown);
+    $(".controls__left").attr("d", controlsSvgLeft);
+    $(".controls__right").attr("d", controlsSvgRight);
+    $(".controls__out").attr("d", controlsSvgOut);
 
   }
 
   function activateControlsButtons() {
     //create rollover states
     $(".controls").find("path").fadeTo(0,0).css("fill", controlsRolloverColor).mouseover(function(){
-      // fade in
+      //fade in
       $(this).fadeTo("fast", controlsRolloverOpacity);
     }).mouseout(function(){
-      // fade out
+      //fade out
       $(this).fadeTo("fast", 0);
     });
 
-    // Zoom out button
+    //zoom out button
     $(".controls__out").click(function() {
-      // Call zoomOut function defined in zoomOut.js
+      //call zoomOut function defined in zoomOut.js
       zoomOut();
     })
 
@@ -81,18 +81,18 @@
 
   function controlsSetup() {
 
-    // Sets the path of the controls
-    $('.controls').css('background-image', 'url(' + controlsGraphicPath + ')');
+    //sets the path of the controls
+    $(".controls").css("background-image", "url(" + controlsGraphicPath + ")");
 
-    // Set the position of the controls
+    //set the position of the controls
     setControlsPosition();  //when it first loads
     $(window).resize(setControlsPosition);  //when window resizes
 
-    // Set the control svg button shapes
+    //set the control svg button shapes
     setControlsSvgButton();
     $(window).resize(setControlsSvgButton);  //when window resizes
 
-    // Set the button functions
+    //set the button functions
     activateControlsButtons();
 
   }

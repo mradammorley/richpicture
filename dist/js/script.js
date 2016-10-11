@@ -64,8 +64,8 @@ $(document).ready(function() {
 
 
   function setMainRichPicPath() {
-    // Sets the path of the main rich pic as defined in the config
-    $('.richpicture__frame__inner ').css('background-image', 'url(' + mainRichPicPath + ')');
+    //sets the path of the main rich pic as defined in the config
+    $(".richpicture__frame__inner").css("background-image", "url(" + mainRichPicPath + ")");
   }
 
   //resizes the frame to the width of the browser window
@@ -77,9 +77,9 @@ $(document).ready(function() {
     //calculate the distance from the top of the window to vertically align
     rpFrameTop = ($(window).innerHeight()-rpFrameHeight)/2;
     //set the element to the sizes calculated
-    $('.richpicture__frame').width(rpFrameWidth).height(rpFrameHeight);
+    $(".richpicture__frame").width(rpFrameWidth).height(rpFrameHeight);
     //set the vertical alignment of the frame
-    $('.richpicture__frame').css("top", rpFrameTop);
+    $(".richpicture__frame").css("top", rpFrameTop);
 
   };
 
@@ -92,7 +92,9 @@ $(document).ready(function() {
         break;
       //if the zoom state is 1 (zoomed in) then use the number of columns to work out the size of the image
       case 1:
+        //work out the width
         rpInnerWidth = rpFrameWidth*numCols;
+
         break;
       default:
         rpInnerWidth = rpFrameWidth;
@@ -100,7 +102,7 @@ $(document).ready(function() {
     //set the rp frame height based on the ratio set in the config
     rpInnerHeight = rpInnerWidth*innerRatio;
     //set the element to the size calculated
-    $('.richpicture__frame__inner').width(rpInnerWidth).height(rpInnerHeight);
+    $(".richpicture__frame__inner").width(rpInnerWidth).height(rpInnerHeight);
   };
 
   function mainSetup() {
@@ -119,17 +121,16 @@ $(document).ready(function() {
 
 
 
-  //FUNCTIONS
 
-  //Create button Panels
+  //create button Panels
   function createRpPanels() {
     for (i=1; i<=numPanels; i++) {
-      $('.richpicture__frame__inner').append('<div class="richpicture__frame__inner__button richpicture__frame__inner__button--' + i + '">&nbsp;</div>');
+      $(".richpicture__frame__inner").append("<div class='richpicture__frame__inner__button richpicture__frame__inner__button--" + i + "'>&nbsp;</div>");
     };
   }
 
 
-  //Position buttons
+  //position buttons
 
   function positionRpPanels () {
     //calculate panel width
@@ -141,9 +142,9 @@ $(document).ready(function() {
     for (r=0; r<numRows; r++) {
       for (c=0; c<numCols; c++) {
         count++;
-        //Hide the buttons
-        //Apply the color size and position
-        $('.richpicture__frame__inner__button--' + count ).css({
+        //hide the buttons
+        //apply the color size and position
+        $(".richpicture__frame__inner__button--" + count ).css({
             left:c*rpPanelWidth,
             top:r*rpPanelHeight,
             width:rpPanelWidth,
@@ -154,17 +155,17 @@ $(document).ready(function() {
     };
   };
 
-  // Make the buttons and them work
+  //make the buttons and them work
   function activatePanelButtons() {
     //create rollover states
-    $('.richpicture__frame__inner__button').mouseover(function(){
-      // fade in
+    $(".richpicture__frame__inner__button").mouseover(function(){
+      //fade in
       $(this).fadeTo("fast", panelRolloverOpacity);
     });
 
    //create rollover states
-    $('.richpicture__frame__inner__button').mouseout(function(){
-      // fade out
+    $(".richpicture__frame__inner__button").mouseout(function(){
+      //fade out
       $(this).fadeTo("fast", 0);
     });
 
@@ -173,12 +174,12 @@ $(document).ready(function() {
     for (r=0; r<numRows; r++) {
       for (c=0; c<numCols; c++) {
         count++;
-        $('.richpicture__frame__inner__button--' + count ).click(function(){
+        $(".richpicture__frame__inner__button--" + count ).click(function(){
           //get top left position of button that has been clicked
           clickedBtnOffset = $(this).offset();
           console.log(clickedBtnOffset.top)
           //get current inner offset
-          rpInnerOffset = $('.richpicture__frame__inner').offset();
+          rpInnerOffset = $(".richpicture__frame__inner").offset();
           //set new margins
           newInnerMarginLeft = rpInnerOffset.left-(clickedBtnOffset.left*numCols);
           newInnerMarginTop = rpInnerOffset.top-(clickedBtnOffset.top*numRows);
@@ -188,23 +189,23 @@ $(document).ready(function() {
           console.log(newInnerWidth);
 
           //set new inner margins and width using clicked button offset
-          $('.richpicture__frame__inner').animate({
+          $(".richpicture__frame__inner").animate({
             marginLeft: newInnerMarginLeft,
             marginTop: newInnerMarginTop,
             width: newInnerWidth,
             height: newInnerHeight,
           }, zoomSpeed, function(){
-            console.log('zoom inner - animation complete');
+            console.log("zoom inner - animation complete");
           });
 
           //make the controls appear
-          $('.controls').fadeTo(zoomSpeed, 1);
+          $(".controls").fadeTo(zoomSpeed, 1);
 
 
           //change the zoom state
           zoomState = 1;
 
-          $('.richpicture__frame__inner__button').remove();
+          $(".richpicture__frame__inner__button").remove();
         });
       };
     };
@@ -212,47 +213,41 @@ $(document).ready(function() {
 
 
   function zoomInSetup() {
-    //Create the panels
+    //create the panels
     createRpPanels();
 
     //calculate the panel sizes and positions
     positionRpPanels();  //when it first loads
     $(window).resize(positionRpPanels);  //when window resizes
 
-    //Activate the panel buttons and the zoom function
+    //activate the panel buttons and the zoom function
     activatePanelButtons();
   }
 
-
-
-  
-
-
-
   function zoomOut() {
 
-    // Set the vars for the new width and height of the image
+    //set the vars for the new width and height of the image
     var newInnerWidth = $(window).innerWidth();
     var newInnerHeight = newInnerWidth*frameRatio;
 
     //set new inner margins and width using clicked button offset
-    $('.richpicture__frame__inner').animate({
+    $(".richpicture__frame__inner").animate({
       marginLeft: 0,
       marginTop: 0,
       width: newInnerWidth,
       height: newInnerHeight,
     }, zoomSpeed, function(){
-      console.log('zoom out - animation complete');
+      console.log("zoom out - animation complete");
     });
 
     //hide the controls appear
-    $('.controls').fadeTo(zoomSpeed, 0);
+    $(".controls").fadeTo(zoomSpeed, 0);
 
 
     //change the zoom state
     zoomState = 0;
 
-    // set up the panels and zoom functions again
+    //set up the panels and zoom functions again
     zoomInSetup();
   };
 
@@ -267,21 +262,21 @@ $(document).ready(function() {
     //check for screen size when setting controls size
     if (rpFrameWidth>=desktopMin ) {
 
-      //Desktop
+      //desktop
       controlsSize = rpFrameWidth*controlsSizeDesktop;
       controlsOffsetLeft = rpFrameWidth*controlsOffsetLeftDesktop;
       controlsOffsetTop = $(window).innerHeight()*controlsOffsetTopDesktop;
 
     } else if (rpFrameWidth>=mobileMax) {
       
-      //Tablet
+      //tablet
       controlsSize = rpFrameWidth*controlsSizeTablet;
       controlsOffsetLeft = rpFrameWidth*controlsOffsetLeftTablet;
       controlsOffsetTop = $(window).innerHeight()*controlsOffsetTopTablet;
 
     } else {
       
-      //Mobile
+      //mobile
       controlsSize = rpFrameWidth*controlsSizeMobile;
       controlsOffsetLeft = rpFrameWidth*controlsOffsetLeftMobile;
       controlsOffsetTop = $(window).innerHeight()*controlsOffsetTopMobile;
@@ -290,11 +285,11 @@ $(document).ready(function() {
     return [controlsSize, controlsOffsetLeft, controlsOffsetTop];
   }
 
-  //Position control buttons
+  //position control buttons
   function setControlsPosition() {
     //calclateControlsSizes() function returns three values in an array, size, left and top
     sizeAndPositionsArr = calculateControlsSize();
-    $('.controls').css({
+    $(".controls").css({
       width:sizeAndPositionsArr[0],
       height:sizeAndPositionsArr[0],
       left:sizeAndPositionsArr[1],
@@ -306,34 +301,34 @@ $(document).ready(function() {
   function setControlsSvgButton() {
     //calclateControlsSizes() function returns three values in an array, size, left and top
     sizeAndPositionsArr = calculateControlsSize();
-    //The coordinates that were set in the config and add them to the html
-    $('.controls').find('svg').attr("viewBox", controlsSvgViewBox);
-    $('.controls').find('svg').css({
+    //the coordinates that were set in the config and add them to the html
+    $(".controls").find("svg").attr("viewBox", controlsSvgViewBox);
+    $(".controls").find("svg").css({
       width:sizeAndPositionsArr[0],
       height:sizeAndPositionsArr[0]
     });
-    //Set the coordinates for the button paths
-    $('.controls__up').attr("d", controlsSvgUp);
-    $('.controls__down').attr("d", controlsSvgDown);
-    $('.controls__left').attr("d", controlsSvgLeft);
-    $('.controls__right').attr("d", controlsSvgRight);
-    $('.controls__out').attr("d", controlsSvgOut);
+    //set the coordinates for the button paths
+    $(".controls__up").attr("d", controlsSvgUp);
+    $(".controls__down").attr("d", controlsSvgDown);
+    $(".controls__left").attr("d", controlsSvgLeft);
+    $(".controls__right").attr("d", controlsSvgRight);
+    $(".controls__out").attr("d", controlsSvgOut);
 
   }
 
   function activateControlsButtons() {
     //create rollover states
     $(".controls").find("path").fadeTo(0,0).css("fill", controlsRolloverColor).mouseover(function(){
-      // fade in
+      //fade in
       $(this).fadeTo("fast", controlsRolloverOpacity);
     }).mouseout(function(){
-      // fade out
+      //fade out
       $(this).fadeTo("fast", 0);
     });
 
-    // Zoom out button
+    //zoom out button
     $(".controls__out").click(function() {
-      // Call zoomOut function defined in zoomOut.js
+      //call zoomOut function defined in zoomOut.js
       zoomOut();
     })
 
@@ -341,18 +336,18 @@ $(document).ready(function() {
 
   function controlsSetup() {
 
-    // Sets the path of the controls
-    $('.controls').css('background-image', 'url(' + controlsGraphicPath + ')');
+    //sets the path of the controls
+    $(".controls").css("background-image", "url(" + controlsGraphicPath + ")");
 
-    // Set the position of the controls
+    //set the position of the controls
     setControlsPosition();  //when it first loads
     $(window).resize(setControlsPosition);  //when window resizes
 
-    // Set the control svg button shapes
+    //set the control svg button shapes
     setControlsSvgButton();
     $(window).resize(setControlsSvgButton);  //when window resizes
 
-    // Set the button functions
+    //set the button functions
     activateControlsButtons();
 
   }
