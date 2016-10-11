@@ -11,12 +11,14 @@
 	//RICHPIC IMAGE LOCATIONS
   	var mainRichPicPath = 'img/main-richpicture.jpg';
   	
-  	//COLORS
-	var rolloverColor = '#FF6600';
-	var rolloverOpacity = '0.3';
+  	//PANELS
+	var panelRolloverColor = '#ff6600';
+	var panelRolloverOpacity = '0.2';
 
 	//CONTROLS
 	var controlsGraphicPath = 'img/controls.svg';
+	var controlsRolloverColor = '#000000';
+	var controlsRolloverOpacity = '0.3';
 	var controlsSizeDesktop = 0.1; // 0.1 equals 10 percent of the main frame width for both width and height
 	var controlsOffsetLeftDesktop = 0.8; // 0.8 equals 80 percent of the main frame width
 	var controlsOffsetTopDesktop = 0.8; // 0.8 equals 80 percent of the main frame height

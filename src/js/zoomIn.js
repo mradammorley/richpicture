@@ -27,9 +27,8 @@
             top:r*rpPanelHeight,
             width:rpPanelWidth,
             height:rpPanelHeight,
-            backgroundColor:rolloverColor,
-            opacity:0
-          });
+            backgroundColor:panelRolloverColor
+        }).fadeTo(0,0);
       };
     };
   };
@@ -39,7 +38,7 @@
     //create rollover states
     $('.richpicture__frame__inner__button').mouseover(function(){
       // fade in
-      $(this).fadeTo("fast", rolloverOpacity);
+      $(this).fadeTo("fast", panelRolloverOpacity);
     });
 
    //create rollover states

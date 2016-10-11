@@ -63,13 +63,10 @@
 
   function activateControlsButtons() {
     //create rollover states
-    $(".controls").find("path").mouseover(function(){
+    $(".controls").find("path").fadeTo(0,0).css("fill", controlsRolloverColor).mouseover(function(){
       // fade in
-      $(this).fadeTo("fast", rolloverOpacity);
-    });
-
-   //create rollover states
-    $(".controls").find("path").mouseout(function(){
+      $(this).fadeTo("fast", controlsRolloverOpacity);
+    }).mouseout(function(){
       // fade out
       $(this).fadeTo("fast", 0);
     });
@@ -81,11 +78,14 @@
   // Sets the path of the controls
   $('.controls').css('background-image', 'url(' + controlsGraphicPath + ')');
 
-  //set the position of the controls
+  // Set the position of the controls
   setControlsPosition();  //when it first loads
   $(window).resize(setControlsPosition);  //when window resizes
 
-  //Set the control svg button shapes
+  // Set the control svg button shapes
   setControlsSvgButton();
   $(window).resize(setControlsSvgButton);  //when window resizes
+
+  // Set the button functions
+  activateControlsButtons();
 

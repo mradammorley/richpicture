@@ -13,12 +13,14 @@ $(document).ready(function() {
 	//RICHPIC IMAGE LOCATIONS
   	var mainRichPicPath = 'img/main-richpicture.jpg';
   	
-  	//COLORS
-	var rolloverColor = '#FF6600';
-	var rolloverOpacity = '0.3';
+  	//PANELS
+	var panelRolloverColor = '#ff6600';
+	var panelRolloverOpacity = '0.2';
 
 	//CONTROLS
 	var controlsGraphicPath = 'img/controls.svg';
+	var controlsRolloverColor = '#000000';
+	var controlsRolloverOpacity = '0.3';
 	var controlsSizeDesktop = 0.1; // 0.1 equals 10 percent of the main frame width for both width and height
 	var controlsOffsetLeftDesktop = 0.8; // 0.8 equals 80 percent of the main frame width
 	var controlsOffsetTopDesktop = 0.8; // 0.8 equals 80 percent of the main frame height
@@ -147,9 +149,8 @@ $(document).ready(function() {
             top:r*rpPanelHeight,
             width:rpPanelWidth,
             height:rpPanelHeight,
-            backgroundColor:rolloverColor,
-            opacity:0
-          });
+            backgroundColor:panelRolloverColor
+        }).fadeTo(0,0);
       };
     };
   };
@@ -159,7 +160,7 @@ $(document).ready(function() {
     //create rollover states
     $('.richpicture__frame__inner__button').mouseover(function(){
       // fade in
-      $(this).fadeTo("fast", rolloverOpacity);
+      $(this).fadeTo("fast", panelRolloverOpacity);
     });
 
    //create rollover states
@@ -286,13 +287,10 @@ $(document).ready(function() {
 
   function activateControlsButtons() {
     //create rollover states
-    $(".controls").find("path").mouseover(function(){
+    $(".controls").find("path").fadeTo(0,0).css("fill", controlsRolloverColor).mouseover(function(){
       // fade in
-      $(this).fadeTo("fast", rolloverOpacity);
-    });
-
-   //create rollover states
-    $(".controls").find("path").mouseout(function(){
+      $(this).fadeTo("fast", controlsRolloverOpacity);
+    }).mouseout(function(){
       // fade out
       $(this).fadeTo("fast", 0);
     });
@@ -304,13 +302,16 @@ $(document).ready(function() {
   // Sets the path of the controls
   $('.controls').css('background-image', 'url(' + controlsGraphicPath + ')');
 
-  //set the position of the controls
+  // Set the position of the controls
   setControlsPosition();  //when it first loads
   $(window).resize(setControlsPosition);  //when window resizes
 
-  //Set the control svg button shapes
+  // Set the control svg button shapes
   setControlsSvgButton();
   $(window).resize(setControlsSvgButton);  //when window resizes
+
+  // Set the button functions
+  activateControlsButtons();
 
 //outro.js
 });
