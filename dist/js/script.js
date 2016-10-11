@@ -45,11 +45,12 @@ $(document).ready(function() {
 
 
 
-  //DECLARE
+  //DECLARE VARS
   var numPanels = numRows*numCols;
   var rpFrameWidth;
   var rpFrameHeight;
   var rpFrameTop;
+  var rpFrameLeft = 0;
   var rpInnerWidth;
   var rpInnerHeight;
   var rpInnerOffset;
@@ -57,12 +58,16 @@ $(document).ready(function() {
   var newInnerMarginTop;
   var newInnerWidth;
   var newInnerHeight;
+  var currentInnerMarginLeft;
+  var currentInnerMargintop;
+  var newPanelMarginLeftRatio;
+  var newPanelMarginTopRatio;
+  var currentPanelMarginLeftRatio;
+  var currentPanelMarginTopRatio;
   var rpPanelWidth;
   var rpPanelHeight;
   var clickedBtnOffset
   var zoomState = 0;
-
-
   function setMainRichPicPath() {
     //sets the path of the main rich pic as defined in the config
     $(".richpicture__frame__inner").css("background-image", "url(" + mainRichPicPath + ")");
@@ -89,20 +94,31 @@ $(document).ready(function() {
       //set the rp image width to the width of the rp frame
       case 0:
         rpInnerWidth = rpFrameWidth;
+        rpInnerHeight = rpInnerWidth*innerRatio;
         break;
       //if the zoom state is 1 (zoomed in) then use the number of columns to work out the size of the image
       case 1:
         //work out the width
         rpInnerWidth = rpFrameWidth*numCols;
-
+        //work out the left margin by turning the ratio back into a number using the new width
+        newInnerMarginLeft = -(rpInnerWidth*currentPanelMarginLeftRatio);
+        //work out the height
+        rpInnerHeight = rpInnerWidth*innerRatio;
+        //work out the top margin
+        newInnerMarginTop = -(rpInnerHeight*currentPanelMarginTopRatio);
+        //set the element margin
+        $(".richpicture__frame__inner").css({
+          marginLeft: newInnerMarginLeft,
+          marginTop: newInnerMarginTop
+        });
         break;
       default:
         rpInnerWidth = rpFrameWidth;
+        rpInnerHeight = rpInnerWidth*innerRatio;
     }
-    //set the rp frame height based on the ratio set in the config
-    rpInnerHeight = rpInnerWidth*innerRatio;
     //set the element to the size calculated
     $(".richpicture__frame__inner").width(rpInnerWidth).height(rpInnerHeight);
+
   };
 
   function mainSetup() {
@@ -175,18 +191,29 @@ $(document).ready(function() {
       for (c=0; c<numCols; c++) {
         count++;
         $(".richpicture__frame__inner__button--" + count ).click(function(){
+
           //get top left position of button that has been clicked
           clickedBtnOffset = $(this).offset();
-          console.log(clickedBtnOffset.top)
-          //get current inner offset
-          rpInnerOffset = $(".richpicture__frame__inner").offset();
-          //set new margins
-          newInnerMarginLeft = rpInnerOffset.left-(clickedBtnOffset.left*numCols);
-          newInnerMarginTop = rpInnerOffset.top-(clickedBtnOffset.top*numRows);
+          var clickedBtnOffsetFromFrameTop = clickedBtnOffset.top - rpFrameTop;
+          var clickedBtnOffsetFromFrameLeft = clickedBtnOffset.left - rpFrameLeft;
+
+          //work out a decimal representing how far along the picture the button is
+          newPanelMarginLeftRatio = clickedBtnOffsetFromFrameLeft/rpFrameWidth;
+          newPanelMarginTopRatio = clickedBtnOffsetFromFrameTop/rpFrameHeight;
+
+          console.log("newPanelMarginLeftRatio= "+newPanelMarginLeftRatio);
+          console.log("newPanelMarginTopRatio= "+newPanelMarginTopRatio);
+
           //calculate new width and height using the number rows and cols
           newInnerWidth = rpFrameWidth*numCols;
+          console.log("newInnerWidth = " + newInnerWidth);
           newInnerHeight = newInnerWidth*innerRatio;
-          console.log(newInnerWidth);
+
+          //set new margins
+          newInnerMarginLeft = -(newInnerWidth*newPanelMarginLeftRatio);
+          newInnerMarginTop = -(newInnerHeight*newPanelMarginTopRatio);
+          
+          console.log("newInnerMarginLeft = " + newInnerMarginLeft);
 
           //set new inner margins and width using clicked button offset
           $(".richpicture__frame__inner").animate({
@@ -197,6 +224,13 @@ $(document).ready(function() {
           }, zoomSpeed, function(){
             console.log("zoom inner - animation complete");
           });
+
+          //store the current ratios for use by other functions
+          currentInnerMarginLeft = newInnerMarginLeft;
+          currentInnerMarginTop = newInnerMarginTop;
+          currentPanelMarginLeftRatio = newPanelMarginLeftRatio;
+          currentPanelMarginTopRatio = newPanelMarginTopRatio;
+
 
           //make the controls appear
           $(".controls").fadeTo(zoomSpeed, 1);
