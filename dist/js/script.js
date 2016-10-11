@@ -39,6 +39,9 @@ $(document).ready(function() {
     var controlsSvgLeft = "M176.64,323.36,73.22,426.78a250,250,0,0,1,0-353.56L176.64,176.64a103.74,103.74,0,0,0,0,146.72Z";
     var controlsSvgOut = "M323.36,176.64A103.74,103.74,0,1,1,250,146.25,103.39,103.39,0,0,1,323.36,176.64Z";
 
+    //PAN
+	var panSpeed = 1000 // 1000 = 1 second
+
 	//SCREEN SIZE DEFINITIONS
 	var desktopMin = 1025; // the size above which desktop layout should appear
 	var mobileMax = 750; // the size below which mobile layout should appear (tablet will be between)
@@ -47,6 +50,10 @@ $(document).ready(function() {
 
   //DECLARE VARS
   var numPanels = numRows*numCols;
+  var verticalPanRatio = (1/numRows)/2; //the pan ratio should be half of a row
+  var horizontalPanRatio = (1/numCols)/2; //the pan ratio should be half of a column
+  var panelWidthRatio = 1/numRows; //this is the width of a panel expressed as a decimal
+  var panelHeightRatio = 1/numCols; //this is the height of panel expressed as a decimal
   var rpFrameWidth;
   var rpFrameHeight;
   var rpFrameTop;
@@ -56,10 +63,12 @@ $(document).ready(function() {
   var rpInnerOffset;
   var newInnerMarginLeft;
   var newInnerMarginTop;
-  var newInnerWidth;
-  var newInnerHeight;
   var currentInnerMarginLeft;
   var currentInnerMargintop;
+  var newInnerWidth;
+  var newInnerHeight;
+  var currentInnerWidth;
+  var currentInnerHeight;
   var newPanelMarginLeftRatio;
   var newPanelMarginTopRatio;
   var currentPanelMarginLeftRatio;
@@ -115,6 +124,7 @@ $(document).ready(function() {
       default:
         rpInnerWidth = rpFrameWidth;
         rpInnerHeight = rpInnerWidth*innerRatio;
+        break;
     }
     //set the element to the size calculated
     $(".richpicture__frame__inner").width(rpInnerWidth).height(rpInnerHeight);
@@ -230,6 +240,8 @@ $(document).ready(function() {
           currentInnerMarginTop = newInnerMarginTop;
           currentPanelMarginLeftRatio = newPanelMarginLeftRatio;
           currentPanelMarginTopRatio = newPanelMarginTopRatio;
+          currentInnerWidth = newInnerWidth;
+          currentInnerHeight = newInnerHeight;
 
 
           //make the controls appear
@@ -364,6 +376,30 @@ $(document).ready(function() {
     $(".controls__out").click(function() {
       //call zoomOut function defined in zoomOut.js
       zoomOut();
+    });
+
+    //left button
+    $(".controls__left").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("left");
+    });
+
+    //right button
+    $(".controls__right").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("right");
+    });
+
+    //up button
+    $(".controls__up").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("up");
+    })
+
+    //down button
+    $(".controls__down").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("down");
     })
 
   }
@@ -386,7 +422,64 @@ $(document).ready(function() {
 
   }
 
-	// INITIALISE RICHPICTURE
+	function pan(direction) {
+		switch (direction) {
+			case "left":
+				//check to see if we are at the end of the image
+				if (currentPanelMarginLeftRatio - horizontalPanRatio >= -0.01) {
+					//set new left margin ratio
+					newPanelMarginLeftRatio = currentPanelMarginLeftRatio - horizontalPanRatio;
+				};
+				//keep the vertical settings the same
+				newPanelMarginTopRatio = currentPanelMarginTopRatio;
+				break;
+			case "right":
+				//check to see if we are at the end of the image
+				if (currentPanelMarginLeftRatio + horizontalPanRatio <= 1.01-panelWidthRatio) {
+					//set new left margin ratio
+					newPanelMarginLeftRatio = currentPanelMarginLeftRatio + horizontalPanRatio;
+				};
+				//keep the vertical settings the same
+				newPanelMarginTopRatio = currentPanelMarginTopRatio;
+				break;
+			case "up":
+				//check to see if we are at the end of the image
+				if (currentPanelMarginTopRatio - verticalPanRatio >= -0.01) {
+					//set new top margin ratio
+					newPanelMarginTopRatio = currentPanelMarginTopRatio - verticalPanRatio;
+				};
+				//keep the vertical settings the same
+				newPanelMarginLeftRatio = currentPanelMarginLeftRatio;
+				break;
+			case "down":
+				//check to see if we are at the end of the image
+				if (currentPanelMarginTopRatio + verticalPanRatio <= 1.01-panelHeightRatio) {
+					//set new top margin ratio
+					newPanelMarginTopRatio = currentPanelMarginTopRatio + verticalPanRatio;
+				};
+				//keep the vertical settings the same
+				newPanelMarginLeftRatio = currentPanelMarginLeftRatio;
+				break;
+			default:
+				console.log("direction not specified in pan");
+		}
+		//turn the ratio into a pixel number
+		newInnerMarginLeft = -(newPanelMarginLeftRatio*currentInnerWidth);
+		newInnerMarginTop = -(newPanelMarginTopRatio*currentInnerHeight);
+
+		//set new inner margins and width using clicked button offset
+          $(".richpicture__frame__inner").animate({
+            	marginLeft: newInnerMarginLeft,
+            	marginTop: newInnerMarginTop
+          	}, panSpeed, function(){
+            	console.log("pan inner - animation complete");
+          });
+
+		//set the current details
+		currentPanelMarginLeftRatio = newPanelMarginLeftRatio;
+		currentPanelMarginTopRatio = newPanelMarginTopRatio;
+
+	}	// INITIALISE RICHPICTURE
 
 	// Set up the Richpicture and frame
 	mainSetup();

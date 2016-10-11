@@ -75,6 +75,30 @@
     $(".controls__out").click(function() {
       //call zoomOut function defined in zoomOut.js
       zoomOut();
+    });
+
+    //left button
+    $(".controls__left").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("left");
+    });
+
+    //right button
+    $(".controls__right").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("right");
+    });
+
+    //up button
+    $(".controls__up").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("up");
+    })
+
+    //down button
+    $(".controls__down").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("down");
     })
 
   }

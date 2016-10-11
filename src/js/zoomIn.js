@@ -91,6 +91,8 @@
           currentInnerMarginTop = newInnerMarginTop;
           currentPanelMarginLeftRatio = newPanelMarginLeftRatio;
           currentPanelMarginTopRatio = newPanelMarginTopRatio;
+          currentInnerWidth = newInnerWidth;
+          currentInnerHeight = newInnerHeight;
 
 
           //make the controls appear

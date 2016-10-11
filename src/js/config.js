@@ -37,6 +37,9 @@
     var controlsSvgLeft = "M176.64,323.36,73.22,426.78a250,250,0,0,1,0-353.56L176.64,176.64a103.74,103.74,0,0,0,0,146.72Z";
     var controlsSvgOut = "M323.36,176.64A103.74,103.74,0,1,1,250,146.25,103.39,103.39,0,0,1,323.36,176.64Z";
 
+    //PAN
+	var panSpeed = 1000 // 1000 = 1 second
+
 	//SCREEN SIZE DEFINITIONS
 	var desktopMin = 1025; // the size above which desktop layout should appear
 	var mobileMax = 750; // the size below which mobile layout should appear (tablet will be between)

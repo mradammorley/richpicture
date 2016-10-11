@@ -46,6 +46,7 @@
       default:
         rpInnerWidth = rpFrameWidth;
         rpInnerHeight = rpInnerWidth*innerRatio;
+        break;
     }
     //set the element to the size calculated
     $(".richpicture__frame__inner").width(rpInnerWidth).height(rpInnerHeight);
