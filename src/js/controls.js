@@ -39,7 +39,7 @@
       height:sizeAndPositionsArr[0],
       left:sizeAndPositionsArr[1],
       top:sizeAndPositionsArr[2]
-    }).fadeTo(0,0);
+    });
 
   };
 
@@ -82,7 +82,7 @@
   function controlsSetup() {
 
     //sets the path of the controls
-    $(".controls").css("background-image", "url(" + controlsGraphicPath + ")");
+    $(".controls").css("background-image", "url(" + controlsGraphicPath + ")").fadeTo(0,0);
 
     //set the position of the controls
     setControlsPosition();  //when it first loads
