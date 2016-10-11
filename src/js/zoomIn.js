@@ -72,9 +72,12 @@
             marginTop: newInnerMarginTop,
             width: newInnerWidth,
             height: newInnerHeight,
-          }, 1000, function(){
+          }, zoomSpeed, function(){
             console.log('zoom inner - animation complete');
           });
+
+          //make the controls appear
+          $('.controls').fadeTo(zoomSpeed, 1);
 
 
           //change the zoom state

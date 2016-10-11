@@ -13,9 +13,10 @@ $(document).ready(function() {
 	//RICHPIC IMAGE LOCATIONS
   	var mainRichPicPath = 'img/main-richpicture.jpg';
   	
-  	//PANELS
+  	//ZOOM
 	var panelRolloverColor = '#ff6600';
 	var panelRolloverOpacity = '0.2';
+	var zoomSpeed = 1000 // 1000 = 1 second
 
 	//CONTROLS
 	var controlsGraphicPath = 'img/controls.svg';
@@ -194,9 +195,12 @@ $(document).ready(function() {
             marginTop: newInnerMarginTop,
             width: newInnerWidth,
             height: newInnerHeight,
-          }, 1000, function(){
+          }, zoomSpeed, function(){
             console.log('zoom inner - animation complete');
           });
+
+          //make the controls appear
+          $('.controls').fadeTo(zoomSpeed, 1);
 
 
           //change the zoom state
@@ -263,7 +267,7 @@ $(document).ready(function() {
       height:sizeAndPositionsArr[0],
       left:sizeAndPositionsArr[1],
       top:sizeAndPositionsArr[2]
-    });
+    }).fadeTo(0,0);
 
   };
 

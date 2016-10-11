@@ -11,9 +11,10 @@
 	//RICHPIC IMAGE LOCATIONS
   	var mainRichPicPath = 'img/main-richpicture.jpg';
   	
-  	//PANELS
+  	//ZOOM
 	var panelRolloverColor = '#ff6600';
 	var panelRolloverOpacity = '0.2';
+	var zoomSpeed = 1000 // 1000 = 1 second
 
 	//CONTROLS
 	var controlsGraphicPath = 'img/controls.svg';

@@ -39,7 +39,7 @@
       height:sizeAndPositionsArr[0],
       left:sizeAndPositionsArr[1],
       top:sizeAndPositionsArr[2]
-    });
+    }).fadeTo(0,0);
 
   };
 
