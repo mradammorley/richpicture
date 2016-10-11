@@ -39,7 +39,7 @@
       height:sizeAndPositionsArr[0],
       left:sizeAndPositionsArr[1],
       top:sizeAndPositionsArr[2]
-    }).fadeTo(0,0);
+    });
 
   };
 
@@ -75,6 +75,30 @@
     $(".controls__out").click(function() {
       //call zoomOut function defined in zoomOut.js
       zoomOut();
+    });
+
+    //left button
+    $(".controls__left").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("left");
+    });
+
+    //right button
+    $(".controls__right").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("right");
+    });
+
+    //up button
+    $(".controls__up").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("up");
+    })
+
+    //down button
+    $(".controls__down").click(function() {
+      //call horizontalPan function defined in pan.js
+      pan("down");
     })
 
   }
@@ -82,7 +106,7 @@
   function controlsSetup() {
 
     //sets the path of the controls
-    $(".controls").css("background-image", "url(" + controlsGraphicPath + ")");
+    $(".controls").css("background-image", "url(" + controlsGraphicPath + ")").fadeTo(0,0);
 
     //set the position of the controls
     setControlsPosition();  //when it first loads

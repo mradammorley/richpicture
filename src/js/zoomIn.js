@@ -52,18 +52,29 @@
       for (c=0; c<numCols; c++) {
         count++;
         $(".richpicture__frame__inner__button--" + count ).click(function(){
+
           //get top left position of button that has been clicked
           clickedBtnOffset = $(this).offset();
-          console.log(clickedBtnOffset.top)
-          //get current inner offset
-          rpInnerOffset = $(".richpicture__frame__inner").offset();
-          //set new margins
-          newInnerMarginLeft = rpInnerOffset.left-(clickedBtnOffset.left*numCols);
-          newInnerMarginTop = rpInnerOffset.top-(clickedBtnOffset.top*numRows);
+          var clickedBtnOffsetFromFrameTop = clickedBtnOffset.top - rpFrameTop;
+          var clickedBtnOffsetFromFrameLeft = clickedBtnOffset.left - rpFrameLeft;
+
+          //work out a decimal representing how far along the picture the button is
+          newPanelMarginLeftRatio = clickedBtnOffsetFromFrameLeft/rpFrameWidth;
+          newPanelMarginTopRatio = clickedBtnOffsetFromFrameTop/rpFrameHeight;
+
+          console.log("newPanelMarginLeftRatio= "+newPanelMarginLeftRatio);
+          console.log("newPanelMarginTopRatio= "+newPanelMarginTopRatio);
+
           //calculate new width and height using the number rows and cols
           newInnerWidth = rpFrameWidth*numCols;
+          console.log("newInnerWidth = " + newInnerWidth);
           newInnerHeight = newInnerWidth*innerRatio;
-          console.log(newInnerWidth);
+
+          //set new margins
+          newInnerMarginLeft = -(newInnerWidth*newPanelMarginLeftRatio);
+          newInnerMarginTop = -(newInnerHeight*newPanelMarginTopRatio);
+          
+          console.log("newInnerMarginLeft = " + newInnerMarginLeft);
 
           //set new inner margins and width using clicked button offset
           $(".richpicture__frame__inner").animate({
@@ -74,6 +85,15 @@
           }, zoomSpeed, function(){
             console.log("zoom inner - animation complete");
           });
+
+          //store the current ratios for use by other functions
+          currentInnerMarginLeft = newInnerMarginLeft;
+          currentInnerMarginTop = newInnerMarginTop;
+          currentPanelMarginLeftRatio = newPanelMarginLeftRatio;
+          currentPanelMarginTopRatio = newPanelMarginTopRatio;
+          currentInnerWidth = newInnerWidth;
+          currentInnerHeight = newInnerHeight;
+
 
           //make the controls appear
           $(".controls").fadeTo(zoomSpeed, 1);

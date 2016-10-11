@@ -1,20 +1,3 @@
-  //DECLARE
-  var numPanels = numRows*numCols;
-  var rpFrameWidth;
-  var rpFrameHeight;
-  var rpFrameTop;
-  var rpInnerWidth;
-  var rpInnerHeight;
-  var rpInnerOffset;
-  var newInnerMarginLeft;
-  var newInnerMarginTop;
-  var newInnerWidth;
-  var newInnerHeight;
-  var rpPanelWidth;
-  var rpPanelHeight;
-  var clickedBtnOffset
-  var zoomState = 0;
-
 
   function setMainRichPicPath() {
     //sets the path of the main rich pic as defined in the config
@@ -42,20 +25,32 @@
       //set the rp image width to the width of the rp frame
       case 0:
         rpInnerWidth = rpFrameWidth;
+        rpInnerHeight = rpInnerWidth*innerRatio;
         break;
       //if the zoom state is 1 (zoomed in) then use the number of columns to work out the size of the image
       case 1:
         //work out the width
         rpInnerWidth = rpFrameWidth*numCols;
-
+        //work out the left margin by turning the ratio back into a number using the new width
+        newInnerMarginLeft = -(rpInnerWidth*currentPanelMarginLeftRatio);
+        //work out the height
+        rpInnerHeight = rpInnerWidth*innerRatio;
+        //work out the top margin
+        newInnerMarginTop = -(rpInnerHeight*currentPanelMarginTopRatio);
+        //set the element margin
+        $(".richpicture__frame__inner").css({
+          marginLeft: newInnerMarginLeft,
+          marginTop: newInnerMarginTop
+        });
         break;
       default:
         rpInnerWidth = rpFrameWidth;
+        rpInnerHeight = rpInnerWidth*innerRatio;
+        break;
     }
-    //set the rp frame height based on the ratio set in the config
-    rpInnerHeight = rpInnerWidth*innerRatio;
     //set the element to the size calculated
     $(".richpicture__frame__inner").width(rpInnerWidth).height(rpInnerHeight);
+
   };
 
   function mainSetup() {
