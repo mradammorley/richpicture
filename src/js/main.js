@@ -15,7 +15,6 @@
   var clickedBtnOffset
   var zoomState = 0;
 
-  //FUNCTIONS
 
   function setMainRichPicPath() {
     // Sets the path of the main rich pic as defined in the config
@@ -57,19 +56,18 @@
     $('.richpicture__frame__inner').width(rpInnerWidth).height(rpInnerHeight);
   };
 
+  function mainSetup() {
+    // Set the path of the main rich pic image
+    setMainRichPicPath();
 
-  //IMPLEMENT
+    // Set the frame size when browser window loads or resizes
+    resizeRpFrame();  //when it first loads
+    $(window).resize(resizeRpFrame);  //when window resizes
 
-  // Set the path of the main rich pic image
-  setMainRichPicPath();
-
-  //set the frame size when browser window loads or resizes
-  resizeRpFrame();  //when it first loads
-  $(window).resize(resizeRpFrame);  //when window resizes
-
-  //set the rp inner size when browser window load
-  resizeRpInner();  //when it first loads
-  $(window).resize(resizeRpInner);  //when window resizes
+    // Set the rp inner size when browser window load
+    resizeRpInner();  //when it first loads
+    $(window).resize(resizeRpInner);  //when window resizes
+  }
 
 
 

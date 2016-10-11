@@ -71,21 +71,29 @@
       $(this).fadeTo("fast", 0);
     });
 
+    // Zoom out button
+    $(".controls__out").click(function() {
+      // Call zoomOut function defined in zoomOut.js
+      zoomOut();
+    })
+
   }
 
-  //IMPLEMENT
+  function controlsSetup() {
 
-  // Sets the path of the controls
-  $('.controls').css('background-image', 'url(' + controlsGraphicPath + ')');
+    // Sets the path of the controls
+    $('.controls').css('background-image', 'url(' + controlsGraphicPath + ')');
 
-  // Set the position of the controls
-  setControlsPosition();  //when it first loads
-  $(window).resize(setControlsPosition);  //when window resizes
+    // Set the position of the controls
+    setControlsPosition();  //when it first loads
+    $(window).resize(setControlsPosition);  //when window resizes
 
-  // Set the control svg button shapes
-  setControlsSvgButton();
-  $(window).resize(setControlsSvgButton);  //when window resizes
+    // Set the control svg button shapes
+    setControlsSvgButton();
+    $(window).resize(setControlsSvgButton);  //when window resizes
 
-  // Set the button functions
-  activateControlsButtons();
+    // Set the button functions
+    activateControlsButtons();
+
+  }
 

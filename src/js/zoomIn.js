@@ -89,17 +89,22 @@
     };
   };
 
-  //IMPLEMENT
 
-  //Create the panels
-  createRpPanels();
+  function zoomInSetup() {
+    //Create the panels
+    createRpPanels();
 
-  //calculate the panel sizes and positions
-  positionRpPanels();  //when it first loads
-  $(window).resize(positionRpPanels);  //when window resizes
+    //calculate the panel sizes and positions
+    positionRpPanels();  //when it first loads
+    $(window).resize(positionRpPanels);  //when window resizes
 
-  //Activate the panel buttons and the zoom function
-  activatePanelButtons();
+    //Activate the panel buttons and the zoom function
+    activatePanelButtons();
+  }
+
+
+
+  
 
 
 

@@ -62,7 +62,6 @@ $(document).ready(function() {
   var clickedBtnOffset
   var zoomState = 0;
 
-  //FUNCTIONS
 
   function setMainRichPicPath() {
     // Sets the path of the main rich pic as defined in the config
@@ -104,19 +103,18 @@ $(document).ready(function() {
     $('.richpicture__frame__inner').width(rpInnerWidth).height(rpInnerHeight);
   };
 
+  function mainSetup() {
+    // Set the path of the main rich pic image
+    setMainRichPicPath();
 
-  //IMPLEMENT
+    // Set the frame size when browser window loads or resizes
+    resizeRpFrame();  //when it first loads
+    $(window).resize(resizeRpFrame);  //when window resizes
 
-  // Set the path of the main rich pic image
-  setMainRichPicPath();
-
-  //set the frame size when browser window loads or resizes
-  resizeRpFrame();  //when it first loads
-  $(window).resize(resizeRpFrame);  //when window resizes
-
-  //set the rp inner size when browser window load
-  resizeRpInner();  //when it first loads
-  $(window).resize(resizeRpInner);  //when window resizes
+    // Set the rp inner size when browser window load
+    resizeRpInner();  //when it first loads
+    $(window).resize(resizeRpInner);  //when window resizes
+  }
 
 
 
@@ -212,17 +210,51 @@ $(document).ready(function() {
     };
   };
 
-  //IMPLEMENT
 
-  //Create the panels
-  createRpPanels();
+  function zoomInSetup() {
+    //Create the panels
+    createRpPanels();
 
-  //calculate the panel sizes and positions
-  positionRpPanels();  //when it first loads
-  $(window).resize(positionRpPanels);  //when window resizes
+    //calculate the panel sizes and positions
+    positionRpPanels();  //when it first loads
+    $(window).resize(positionRpPanels);  //when window resizes
 
-  //Activate the panel buttons and the zoom function
-  activatePanelButtons();
+    //Activate the panel buttons and the zoom function
+    activatePanelButtons();
+  }
+
+
+
+  
+
+
+
+  function zoomOut() {
+
+    // Set the vars for the new width and height of the image
+    var newInnerWidth = $(window).innerWidth();
+    var newInnerHeight = newInnerWidth*frameRatio;
+
+    //set new inner margins and width using clicked button offset
+    $('.richpicture__frame__inner').animate({
+      marginLeft: 0,
+      marginTop: 0,
+      width: newInnerWidth,
+      height: newInnerHeight,
+    }, zoomSpeed, function(){
+      console.log('zoom out - animation complete');
+    });
+
+    //hide the controls appear
+    $('.controls').fadeTo(zoomSpeed, 0);
+
+
+    //change the zoom state
+    zoomState = 0;
+
+    // set up the panels and zoom functions again
+    zoomInSetup();
+  };
 
 
 
@@ -299,23 +331,40 @@ $(document).ready(function() {
       $(this).fadeTo("fast", 0);
     });
 
+    // Zoom out button
+    $(".controls__out").click(function() {
+      // Call zoomOut function defined in zoomOut.js
+      zoomOut();
+    })
+
   }
 
-  //IMPLEMENT
+  function controlsSetup() {
 
-  // Sets the path of the controls
-  $('.controls').css('background-image', 'url(' + controlsGraphicPath + ')');
+    // Sets the path of the controls
+    $('.controls').css('background-image', 'url(' + controlsGraphicPath + ')');
 
-  // Set the position of the controls
-  setControlsPosition();  //when it first loads
-  $(window).resize(setControlsPosition);  //when window resizes
+    // Set the position of the controls
+    setControlsPosition();  //when it first loads
+    $(window).resize(setControlsPosition);  //when window resizes
 
-  // Set the control svg button shapes
-  setControlsSvgButton();
-  $(window).resize(setControlsSvgButton);  //when window resizes
+    // Set the control svg button shapes
+    setControlsSvgButton();
+    $(window).resize(setControlsSvgButton);  //when window resizes
 
-  // Set the button functions
-  activateControlsButtons();
+    // Set the button functions
+    activateControlsButtons();
 
-//outro.js
+  }
+
+	// INITIALISE RICHPICTURE
+
+	// Set up the Richpicture and frame
+	mainSetup();
+
+	// Create and position panel buttons and activate zoom functionality
+	zoomInSetup();
+
+	// Create and postion controls
+	controlsSetup();//outro.js
 });
