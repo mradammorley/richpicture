@@ -1,0 +1,38 @@
+// Modules and Variables
+@import "partials/base";
+
+// Partials
+@import "partials/reset";
+@import "partials/initial";
+@import "partials/typography";
+@import "partials/grids";
+// ...
+
+// Third-party
+//@import "vendor/colorpicker";
+
+//Colors
+$rolloverColor:#FF6600;
+
+.richpicture__frame {
+	position:absolute;
+	overflow:hidden;
+}
+
+.richpicture__frame__inner {
+	background-repeat:no-repeat;
+	background-size:contain;
+}
+
+.richpicture__frame__inner__button {
+	position:absolute;
+}
+
+.richpicture__frame__inner__button:hover {
+	cursor:pointer;
+}
+
+.controls {
+	position:absolute;
+	z-index:100;
+}
