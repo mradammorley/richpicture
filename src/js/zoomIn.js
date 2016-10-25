@@ -77,12 +77,12 @@
           console.log("newInnerMarginLeft = " + newInnerMarginLeft);
 
           //set new inner margins and width using clicked button offset
-          $(".richpicture__frame__inner").animate({
+          $(".richpicture__frame__inner, .richpicture__frame__detail").animate({
             marginLeft: newInnerMarginLeft,
             marginTop: newInnerMarginTop,
             width: newInnerWidth,
             height: newInnerHeight,
-          }, zoomSpeed, function(){
+          }, zoomSpeed, zoomEase, function(){
             console.log("zoom inner - animation complete");
           });
 
@@ -95,8 +95,11 @@
           currentInnerHeight = newInnerHeight;
 
 
-          //make the controls appear
-          $(".controls").fadeTo(zoomSpeed, 1);
+          //make the controls and details appear
+          $(".controls").fadeTo(zoomSpeed, 1, zoomEase);
+
+          //make the details appear
+          $(".richpicture__frame__detail").fadeTo(zoomSpeed, 1, zoomEase).dequeue();
 
 
           //change the zoom state

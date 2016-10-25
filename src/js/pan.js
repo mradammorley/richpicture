@@ -54,10 +54,10 @@
 			newInnerMarginTop = -(newPanelMarginTopRatio*currentInnerHeight);
 
 			//set new inner margins and width using clicked button offset
-	          $(".richpicture__frame__inner").animate({
+	          $(".richpicture__frame__inner, .richpicture__frame__detail").animate({
 	            	marginLeft: newInnerMarginLeft,
 	            	marginTop: newInnerMarginTop
-	          	}, panSpeed, function(){
+	          	}, panSpeed, panEase, function(){
 	          		moveStatus = false;;
 	          });
 

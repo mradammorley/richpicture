@@ -2,6 +2,8 @@
   function setMainRichPicPath() {
     //sets the path of the main rich pic as defined in the config
     $(".richpicture__frame__inner").css("background-image", "url(" + mainRichPicPath + ")");
+    //sets the path of the detail rich pic as defined in the config and hide it
+    $(".richpicture__frame__detail").css("background-image", "url(" + detailRichPicPath + ")").fadeTo(0,0);
   }
 
   //resizes the frame to the width of the browser window
@@ -38,7 +40,7 @@
         //work out the top margin
         newInnerMarginTop = -(rpInnerHeight*currentPanelMarginTopRatio);
         //set the element margin
-        $(".richpicture__frame__inner").css({
+        $(".richpicture__frame__inner, .richpicture__frame__detail").css({
           marginLeft: newInnerMarginLeft,
           marginTop: newInnerMarginTop
         });
@@ -49,7 +51,7 @@
         break;
     }
     //set the element to the size calculated
-    $(".richpicture__frame__inner").width(rpInnerWidth).height(rpInnerHeight);
+    $(".richpicture__frame__inner, .richpicture__frame__detail").width(rpInnerWidth).height(rpInnerHeight);
 
   };
 

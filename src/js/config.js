@@ -10,11 +10,13 @@
 
 	//RICHPIC IMAGE LOCATIONS
   	var mainRichPicPath = 'img/main-richpicture.jpg';
+  	var detailRichPicPath = 'img/detail-richpicture.png';
   	
   	//ZOOM
 	var panelRolloverColor = '#ff6600';
 	var panelRolloverOpacity = '0.2';
-	var zoomSpeed = 1000 // 1000 = 1 second
+	var zoomSpeed = 1500; // 1000 = 1 second
+	var zoomEase = "swing"; // 1000 = 1 second
 
 	//CONTROLS
 	var controlsGraphicPath = 'img/controls.svg';
@@ -39,6 +41,7 @@
 
     //PAN
 	var panSpeed = 1000 // 1000 = 1 second
+	var panEase = "swing"; // 1000 = 1 second
 
 	//SCREEN SIZE DEFINITIONS
 	var desktopMin = 1025; // the size above which desktop layout should appear
