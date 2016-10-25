@@ -12,11 +12,13 @@ $(document).ready(function() {
 
 	//RICHPIC IMAGE LOCATIONS
   	var mainRichPicPath = 'img/main-richpicture.jpg';
+  	var detailRichPicPath = 'img/detail-richpicture.png';
   	
   	//ZOOM
 	var panelRolloverColor = '#ff6600';
 	var panelRolloverOpacity = '0.2';
-	var zoomSpeed = 1000 // 1000 = 1 second
+	var zoomSpeed = 1500; // 1000 = 1 second
+	var zoomEase = "swing"; // 1000 = 1 second
 
 	//CONTROLS
 	var controlsGraphicPath = 'img/controls.svg';
@@ -41,6 +43,7 @@ $(document).ready(function() {
 
     //PAN
 	var panSpeed = 1000 // 1000 = 1 second
+	var panEase = "swing"; // 1000 = 1 second
 
 	//SCREEN SIZE DEFINITIONS
 	var desktopMin = 1025; // the size above which desktop layout should appear
@@ -80,6 +83,8 @@ $(document).ready(function() {
   function setMainRichPicPath() {
     //sets the path of the main rich pic as defined in the config
     $(".richpicture__frame__inner").css("background-image", "url(" + mainRichPicPath + ")");
+    //sets the path of the detail rich pic as defined in the config and hide it
+    $(".richpicture__frame__detail").css("background-image", "url(" + detailRichPicPath + ")").fadeTo(0,0);
   }
 
   //resizes the frame to the width of the browser window
@@ -116,7 +121,7 @@ $(document).ready(function() {
         //work out the top margin
         newInnerMarginTop = -(rpInnerHeight*currentPanelMarginTopRatio);
         //set the element margin
-        $(".richpicture__frame__inner").css({
+        $(".richpicture__frame__inner, .richpicture__frame__detail").css({
           marginLeft: newInnerMarginLeft,
           marginTop: newInnerMarginTop
         });
@@ -127,7 +132,7 @@ $(document).ready(function() {
         break;
     }
     //set the element to the size calculated
-    $(".richpicture__frame__inner").width(rpInnerWidth).height(rpInnerHeight);
+    $(".richpicture__frame__inner, .richpicture__frame__detail").width(rpInnerWidth).height(rpInnerHeight);
 
   };
 
@@ -226,12 +231,12 @@ $(document).ready(function() {
           console.log("newInnerMarginLeft = " + newInnerMarginLeft);
 
           //set new inner margins and width using clicked button offset
-          $(".richpicture__frame__inner").animate({
+          $(".richpicture__frame__inner, .richpicture__frame__detail").animate({
             marginLeft: newInnerMarginLeft,
             marginTop: newInnerMarginTop,
             width: newInnerWidth,
             height: newInnerHeight,
-          }, zoomSpeed, function(){
+          }, zoomSpeed, zoomEase, function(){
             console.log("zoom inner - animation complete");
           });
 
@@ -244,8 +249,11 @@ $(document).ready(function() {
           currentInnerHeight = newInnerHeight;
 
 
-          //make the controls appear
-          $(".controls").fadeTo(zoomSpeed, 1);
+          //make the controls and details appear
+          $(".controls").fadeTo(zoomSpeed, 1, zoomEase);
+
+          //make the details appear
+          $(".richpicture__frame__detail").fadeTo(zoomSpeed, 1, zoomEase).dequeue();
 
 
           //change the zoom state
@@ -277,18 +285,20 @@ $(document).ready(function() {
     var newInnerHeight = newInnerWidth*frameRatio;
 
     //set new inner margins and width using clicked button offset
-    $(".richpicture__frame__inner").animate({
+    $(".richpicture__frame__inner, .richpicture__frame__detail").animate({
       marginLeft: 0,
       marginTop: 0,
       width: newInnerWidth,
       height: newInnerHeight,
-    }, zoomSpeed, function(){
+    }, zoomSpeed, zoomEase, function(){
       console.log("zoom out - animation complete");
     });
 
     //hide the controls appear
-    $(".controls").fadeTo(zoomSpeed, 0);
+    $(".controls").fadeTo(zoomSpeed, 0, zoomEase);
 
+    //make the details appear
+    $(".richpicture__frame__detail").fadeTo(zoomSpeed, 0, zoomEase).dequeue();
 
     //change the zoom state
     zoomState = 0;
@@ -478,10 +488,10 @@ $(document).ready(function() {
 			newInnerMarginTop = -(newPanelMarginTopRatio*currentInnerHeight);
 
 			//set new inner margins and width using clicked button offset
-	          $(".richpicture__frame__inner").animate({
+	          $(".richpicture__frame__inner, .richpicture__frame__detail").animate({
 	            	marginLeft: newInnerMarginLeft,
 	            	marginTop: newInnerMarginTop
-	          	}, panSpeed, function(){
+	          	}, panSpeed, panEase, function(){
 	          		moveStatus = false;;
 	          });
 

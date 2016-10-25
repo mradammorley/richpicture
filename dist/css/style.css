@@ -45,12 +45,16 @@ button {
   position: absolute;
   overflow: hidden; }
 
-.richpicture__frame__inner {
+.richpicture__frame__inner, .richpicture__frame__detail {
   background-repeat: no-repeat;
   background-size: contain; }
 
-.richpicture__frame__inner__button {
+.richpicture__frame__detail {
   position: absolute; }
+
+.richpicture__frame__inner__button {
+  position: absolute;
+  z-index: 50; }
 
 .richpicture__frame__inner__button:hover {
   cursor: pointer; }
