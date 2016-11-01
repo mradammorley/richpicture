@@ -52,6 +52,9 @@ button {
 .richpicture__frame__detail {
   position: absolute; }
 
+.richpicture__frame__hotspots {
+  position: absolute; }
+
 .richpicture__frame__inner__button {
   position: absolute;
   z-index: 50; }

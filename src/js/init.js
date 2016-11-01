@@ -1,10 +1,10 @@
-	// INITIALISE RICHPICTURE
+	//INITIALISE RICHPICTURE
 
-	// Set up the Richpicture and frame
+	//set up the Richpicture and frame
 	mainSetup();
 
-	// Create and position panel buttons and activate zoom functionality
+	//create and position panel buttons and activate zoom functionality
 	zoomInSetup();
 
-	// Create and postion controls
+	//create and postion controls
 	controlsSetup();

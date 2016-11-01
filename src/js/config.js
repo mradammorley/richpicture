@@ -1,5 +1,21 @@
 	//CONFIG
 
+	//HOTSPOTS
+	var numHotspots = 2;
+
+	var hotspotData = [
+		{
+			'id' : 'hs1',
+			'svg' : '<polygon id="hs1" style="fill: red;" points="1451.8 391.25 1481.68 342.69 1558.26 342.69 1610.56 275.45 1675.93 275.45 1713.28 215.68 1771.18 225.02 1806.67 150.31 1866.44 159.65 1898.19 99.88 1999.05 88.67 1999.05 376.31 1926.21 391.25 1894.45 430.48 1844.03 430.48 1806.67 486.51 1745.03 486.51 1700.21 551.88 1618.03 570.56 1578.8 622.86 1481.68 643.4 1451.8 699.43 1451.8 391.25"/>',
+			'link' : 'http://www.google.com'
+		},
+		{
+			'id' : 'hs2',
+			'svg' : '<polygon id="hs2" points="1451.8 391.25 1481.68 342.69 1558.26 342.69 1610.56 275.45 1675.93 275.45 1713.28 215.68 1771.18 225.02 1806.67 150.31 1866.44 159.65 1898.19 99.88 1999.05 88.67 1999.05 376.31 1926.21 391.25 1894.45 430.48 1844.03 430.48 1806.67 486.51 1745.03 486.51 1700.21 551.88 1618.03 570.56 1578.8 622.86 1481.68 643.4 1451.8 699.43 1451.8 391.25"/>',
+			'link' : 'http://www.google.com'
+		}
+	];
+
 	//SIZES
 	var formatWidth = 1920;
 	var formatHeight = 1080;
@@ -46,6 +62,3 @@
 	//SCREEN SIZE DEFINITIONS
 	var desktopMin = 1025; // the size above which desktop layout should appear
 	var mobileMax = 750; // the size below which mobile layout should appear (tablet will be between)
-
-
-

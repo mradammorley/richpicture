@@ -2,6 +2,22 @@ $(document).ready(function() {
 
 	//CONFIG
 
+	//HOTSPOTS
+	var numHotspots = 2;
+
+	var hotspotData = [
+		{
+			'id' : 'hs1',
+			'svg' : '<polygon id="hs1" style="fill: red;" points="1451.8 391.25 1481.68 342.69 1558.26 342.69 1610.56 275.45 1675.93 275.45 1713.28 215.68 1771.18 225.02 1806.67 150.31 1866.44 159.65 1898.19 99.88 1999.05 88.67 1999.05 376.31 1926.21 391.25 1894.45 430.48 1844.03 430.48 1806.67 486.51 1745.03 486.51 1700.21 551.88 1618.03 570.56 1578.8 622.86 1481.68 643.4 1451.8 699.43 1451.8 391.25"/>',
+			'link' : 'http://www.google.com'
+		},
+		{
+			'id' : 'hs2',
+			'svg' : '<polygon id="hs2" points="1451.8 391.25 1481.68 342.69 1558.26 342.69 1610.56 275.45 1675.93 275.45 1713.28 215.68 1771.18 225.02 1806.67 150.31 1866.44 159.65 1898.19 99.88 1999.05 88.67 1999.05 376.31 1926.21 391.25 1894.45 430.48 1844.03 430.48 1806.67 486.51 1745.03 486.51 1700.21 551.88 1618.03 570.56 1578.8 622.86 1481.68 643.4 1451.8 699.43 1451.8 391.25"/>',
+			'link' : 'http://www.google.com'
+		}
+	];
+
 	//SIZES
 	var formatWidth = 1920;
 	var formatHeight = 1080;
@@ -47,11 +63,7 @@ $(document).ready(function() {
 
 	//SCREEN SIZE DEFINITIONS
 	var desktopMin = 1025; // the size above which desktop layout should appear
-	var mobileMax = 750; // the size below which mobile layout should appear (tablet will be between)
-
-
-
-  //DECLARE VARS
+	var mobileMax = 750; // the size below which mobile layout should appear (tablet will be between)  //DECLARE VARS
   var numPanels = numRows*numCols;
   var verticalPanRatio = (1/numRows)/2; //the pan ratio should be half of a row
   var horizontalPanRatio = (1/numCols)/2; //the pan ratio should be half of a column
@@ -237,34 +249,42 @@ $(document).ready(function() {
             width: newInnerWidth,
             height: newInnerHeight,
           }, zoomSpeed, zoomEase, function(){
-            console.log("zoom inner - animation complete");
+            zoomedInFunctions();
           });
-
-          //store the current ratios for use by other functions
-          currentInnerMarginLeft = newInnerMarginLeft;
-          currentInnerMarginTop = newInnerMarginTop;
-          currentPanelMarginLeftRatio = newPanelMarginLeftRatio;
-          currentPanelMarginTopRatio = newPanelMarginTopRatio;
-          currentInnerWidth = newInnerWidth;
-          currentInnerHeight = newInnerHeight;
-
-
-          //make the controls and details appear
-          $(".controls").fadeTo(zoomSpeed, 1, zoomEase);
 
           //make the details appear
           $(".richpicture__frame__detail").fadeTo(zoomSpeed, 1, zoomEase).dequeue();
 
-
-          //change the zoom state
-          zoomState = 1;
-
+          //remove the zoom buttons
           $(".richpicture__frame__inner__button").remove();
+
         });
       };
     };
   };
 
+  //function to action once zoom in is complete
+  function zoomedInFunctions() {
+
+    //store the current ratios for use by other functions
+    currentInnerMarginLeft = newInnerMarginLeft;
+    currentInnerMarginTop = newInnerMarginTop;
+    currentPanelMarginLeftRatio = newPanelMarginLeftRatio;
+    currentPanelMarginTopRatio = newPanelMarginTopRatio;
+    currentInnerWidth = newInnerWidth;
+    currentInnerHeight = newInnerHeight;
+
+    //Set up the hotspots
+    setUpHotspots();
+
+    //make the controls and details appear
+    $(".controls").fadeTo(zoomSpeed, 1, zoomEase);
+
+    //change the zoom state
+    zoomState = 1;
+
+
+  }
 
   function zoomInSetup() {
     //create the panels
@@ -500,14 +520,42 @@ $(document).ready(function() {
 			currentPanelMarginTopRatio = newPanelMarginTopRatio;
 		}
 
-	}	// INITIALISE RICHPICTURE
+	}
 
-	// Set up the Richpicture and frame
+	
+	function resizeHotspotsContainer() {
+		//set the element to the sizes calculated
+		$(".richpicture__frame__hotspots").width(currentInnerWidth).height(currentInnerHeight);
+
+	};
+
+	function createHotspots() {
+		//loop through hotspots which are config using json in config.js
+		for (hscount=0; hscount<numHotspots; hscount++) {
+			//add the svg shape of the hotspot
+	     	$(".richpicture__frame__hotspots").append('<svg id="hotspots_layer" data-name="hotspots" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5760 3240">' + hotspotData[hscount].svg + '</svg>');
+	     	//change the class the shape
+	     	$(".richpicture__frame__hotspots #" + hotspotData[hscount].id).addClass("richpicture__frame__hotspots--" + hotspotData[hscount].id);
+	    };
+	};
+
+	function setUpHotspots() {
+		//size the container
+		resizeHotspotsContainer();
+    	$(window).resize(resizeHotspotsContainer);  //when window resizes
+
+		//create the hotspots
+		createHotspots()
+	}
+
+	//INITIALISE RICHPICTURE
+
+	//set up the Richpicture and frame
 	mainSetup();
 
-	// Create and position panel buttons and activate zoom functionality
+	//create and position panel buttons and activate zoom functionality
 	zoomInSetup();
 
-	// Create and postion controls
+	//create and postion controls
 	controlsSetup();//outro.js
 });

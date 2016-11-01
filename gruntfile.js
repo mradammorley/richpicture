@@ -20,7 +20,7 @@ module.exports = function(grunt) {
               separator: '',
             },
             dist: {
-              src: ['src/js/intro.js', 'src/js/config.js', 'src/js/vars.js', 'src/js/main.js', 'src/js/zoomIn.js', 'src/js/zoomOut.js', 'src/js/controls.js', 'src/js/pan.js', 'src/js/init.js', 'src/js/outro.js'],
+              src: ['src/js/intro.js', 'src/js/config.js', 'src/js/vars.js', 'src/js/main.js', 'src/js/zoomIn.js', 'src/js/zoomOut.js', 'src/js/controls.js', 'src/js/pan.js', 'src/js/hotspots.js', 'src/js/init.js', 'src/js/outro.js'],
               dest: 'dist/js/script.js',
             },
         },

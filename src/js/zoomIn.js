@@ -83,34 +83,42 @@
             width: newInnerWidth,
             height: newInnerHeight,
           }, zoomSpeed, zoomEase, function(){
-            console.log("zoom inner - animation complete");
+            zoomedInFunctions();
           });
-
-          //store the current ratios for use by other functions
-          currentInnerMarginLeft = newInnerMarginLeft;
-          currentInnerMarginTop = newInnerMarginTop;
-          currentPanelMarginLeftRatio = newPanelMarginLeftRatio;
-          currentPanelMarginTopRatio = newPanelMarginTopRatio;
-          currentInnerWidth = newInnerWidth;
-          currentInnerHeight = newInnerHeight;
-
-
-          //make the controls and details appear
-          $(".controls").fadeTo(zoomSpeed, 1, zoomEase);
 
           //make the details appear
           $(".richpicture__frame__detail").fadeTo(zoomSpeed, 1, zoomEase).dequeue();
 
-
-          //change the zoom state
-          zoomState = 1;
-
+          //remove the zoom buttons
           $(".richpicture__frame__inner__button").remove();
+
         });
       };
     };
   };
 
+  //function to action once zoom in is complete
+  function zoomedInFunctions() {
+
+    //store the current ratios for use by other functions
+    currentInnerMarginLeft = newInnerMarginLeft;
+    currentInnerMarginTop = newInnerMarginTop;
+    currentPanelMarginLeftRatio = newPanelMarginLeftRatio;
+    currentPanelMarginTopRatio = newPanelMarginTopRatio;
+    currentInnerWidth = newInnerWidth;
+    currentInnerHeight = newInnerHeight;
+
+    //Set up the hotspots
+    setUpHotspots();
+
+    //make the controls and details appear
+    $(".controls").fadeTo(zoomSpeed, 1, zoomEase);
+
+    //change the zoom state
+    zoomState = 1;
+
+
+  }
 
   function zoomInSetup() {
     //create the panels
